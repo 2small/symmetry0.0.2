@@ -304,6 +304,19 @@
 .symmetry-app [class*="chart"] h3,
 .symmetry-app .glass-card h3 { color: var(--ink-2); }
 
+/* Welcome header: let the chart drop to its own full-width row instead of
+   being squeezed beside the greeting (legacy markup nests it in the flex row) */
+.symmetry-app .glass-card > .flex.items-center.justify-between { flex-wrap: wrap; gap: 20px; }
+.symmetry-app .glass-card > .flex.items-center.justify-between > div:first-child { flex: 1 1 240px; }
+.symmetry-app .glass-card > .flex.items-center.justify-between > div[style*="height: 360px"] {
+  flex: 1 1 100%;
+  width: 100%;
+  height: auto !important;
+  min-height: 320px;
+  margin: 8px 0 0 0 !important;
+  background: var(--surface-2) !important;
+}
+
 /* --------------------------------------------------------------------------
    Stats cards (override the inline glassy white)
    -------------------------------------------------------------------------- */
