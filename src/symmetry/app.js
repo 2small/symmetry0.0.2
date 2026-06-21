@@ -716,7 +716,7 @@
       el.id = taskId;
       el.dataset.zone = zone;
       el.draggable = true;
-      el.style.cssText = 'width: 100%; display:flex; align-items:center; justify-content:space-between; gap:8px; padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(15, 23, 42, 0.25); background: #0F172A; color: #F9FAFB; font-family: Livvic, sans-serif; font-size: 0.85rem; cursor: grab; transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;';
+      el.style.cssText = 'width: 100%; display:flex; align-items:center; justify-content:space-between; gap:8px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(51, 64, 58, 0.12); background: #fffdf8; color: #33403a; font-family: Livvic, sans-serif; font-size: 0.85rem; cursor: grab; box-shadow: 0 1px 2px rgba(51,64,58,0.05); transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;';
 
       const textSpan = document.createElement('span');
       textSpan.textContent = text;
@@ -729,7 +729,7 @@
       editBtn.type = 'button';
       editBtn.textContent = '✎';
       editBtn.title = 'Edit task';
-      editBtn.style.cssText = 'width: 22px; height: 22px; border-radius: 999px; border: none; background: rgba(15,23,42,0.9); color: #E5E7EB; cursor: pointer; font-size: 0.7rem;';
+      editBtn.style.cssText = 'width: 22px; height: 22px; border-radius: 999px; border: 1px solid rgba(51,64,58,0.12); background: #f7f3ea; color: #5f6f66; cursor: pointer; font-size: 0.7rem;';
       editBtn.onclick = (event) => {
         event.stopPropagation();
         editEisenTask(taskId);
@@ -738,7 +738,7 @@
       const handle = document.createElement('span');
       handle.textContent = '⋮⋮';
       handle.title = 'Drag to move';
-      handle.style.cssText = 'font-size: 0.7rem; color: #94A3B8; cursor: grab;';
+      handle.style.cssText = 'font-size: 0.7rem; color: #97a298; cursor: grab;';
 
       actions.appendChild(editBtn);
       actions.appendChild(handle);
@@ -1673,7 +1673,7 @@
       wrapper.style.position = 'relative';
       const message = document.createElement('div');
       message.id = 'symmetryFallbackMessage';
-      message.style.cssText = 'position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; border-radius: 22px; background: rgba(15, 23, 42, 0.92); color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; text-align: center; border: 1px solid rgba(255,255,255,0.12); z-index: 10; pointer-events: auto;';
+      message.style.cssText = 'position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; border-radius: 22px; background: rgba(255, 253, 248, 0.94); color: #5f6f66; font-size: 0.95rem; line-height: 1.6; text-align: center; border: 1px solid rgba(51,64,58,0.08); z-index: 10; pointer-events: auto;';
       const title = document.createElement('div');
       title.style.marginBottom = '16px';
       title.innerHTML = tabName === 'momentum'
@@ -1699,7 +1699,7 @@
       const momentumButton = document.createElement('button');
       momentumButton.type = 'button';
       momentumButton.textContent = 'Go to Mind Hub';
-      momentumButton.style.cssText = 'padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(135,169,107,0.4); background: rgba(15,23,42,0.92); color: #87A96B; cursor: pointer; font-weight: 700; pointer-events: auto;';
+      momentumButton.style.cssText = 'padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(124,154,106,0.45); background: transparent; color: #5f7d50; cursor: pointer; font-weight: 700; pointer-events: auto;';
       momentumButton.onclick = () => openUtilitySection('cognitiveMomentum');
 
       actions.appendChild(selfCheckButton);
