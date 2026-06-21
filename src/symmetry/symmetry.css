@@ -1,10 +1,13 @@
 /* ==========================================================================
-   Symmetry — calm, modern-minimal design system
-   Scoped to the ported dashboard markup. Light, warm, airy, sage accent.
+   Symmetry — calm, warm, modern design system (full restyle)
+   Everything is scoped under .symmetry-app. This stylesheet intentionally
+   overrides the legacy inline styling so the whole app reads as one cohesive,
+   calming, light experience. Layout (grids/flex) from the markup is kept;
+   colours, surfaces, type, spacing and depth are redefined here.
    ========================================================================== */
 
 .symmetry-app {
-  /* spacing scale */
+  /* ---- spacing scale ---- */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -12,63 +15,77 @@
   --space-6: 1.5rem;
   --space-8: 2rem;
 
-  /* type scale */
+  /* ---- type scale ---- */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-lg: 1.125rem;
   --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
+  --text-2xl: 1.6rem;
+  --text-3xl: 1.95rem;
+  --text-4xl: 2.5rem;
 
-  /* radii */
-  --radius-sm: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 22px;
+  /* ---- radii ---- */
+  --radius-sm: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-2xl: 34px;
   --radius-full: 9999px;
 
-  /* weights */
+  /* ---- weights ---- */
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
 
-  /* calm palette */
-  --color-bg-primary: #f6f5f1;
-  --color-surface: #ffffff;
-  --color-surface-2: #fbfaf7;
-  --color-primary: #87a96b;
-  --color-primary-strong: #6b8f5a;
-  --color-text-primary: #2f3e46;
-  --color-text-secondary: #5a6b73;
-  --color-text-muted: #94a3b8;
-  --color-border: rgba(47, 62, 70, 0.1);
-  --color-border-soft: rgba(47, 62, 70, 0.06);
-  --shadow-soft: 0 12px 40px -24px rgba(47, 62, 70, 0.35);
-  --shadow-card: 0 1px 2px rgba(47, 62, 70, 0.04), 0 18px 40px -30px rgba(47, 62, 70, 0.4);
+  /* ---- warm calm palette ---- */
+  --bg: #f3efe7;
+  --bg-tint: radial-gradient(1100px 620px at 12% -10%, rgba(124, 154, 106, 0.10), transparent 60%),
+             radial-gradient(900px 520px at 100% 0%, rgba(201, 138, 107, 0.08), transparent 55%);
+  --surface: #fffdf8;
+  --surface-2: #f7f3ea;
+  --surface-3: #efe9dc;
 
-  /* aliases used by inline markup */
-  --accent: var(--color-primary);
-  --accent-strong: var(--color-primary-strong);
-  --text-primary: var(--color-text-primary);
-  --text-secondary: var(--color-text-secondary);
-  --bg-primary: var(--color-bg-primary);
-  --bg-secondary: var(--color-surface-2);
-  --card-bg: var(--color-surface);
-  --border-color: var(--color-border);
+  --sage: #7c9a6a;
+  --sage-strong: #5f7d50;
+  --sage-soft: rgba(124, 154, 106, 0.12);
+  --sage-soft-2: rgba(124, 154, 106, 0.18);
+  --clay: #c98a6b;        /* warm secondary accent, used sparingly */
+  --clay-soft: rgba(201, 138, 107, 0.14);
+
+  --ink: #33403a;
+  --ink-2: #5f6f66;
+  --muted: #97a298;
+  --border: rgba(51, 64, 58, 0.10);
+  --border-soft: rgba(51, 64, 58, 0.06);
+
+  --shadow-xs: 0 1px 2px rgba(51, 64, 58, 0.05);
+  --shadow-soft: 0 20px 48px -28px rgba(51, 64, 58, 0.42);
+  --shadow-card: 0 1px 2px rgba(51, 64, 58, 0.04), 0 24px 50px -34px rgba(51, 64, 58, 0.40);
+  --shadow-pop: 0 30px 70px -30px rgba(51, 64, 58, 0.45);
+
+  /* aliases used by inline markup variables */
+  --accent: var(--sage);
+  --accent-strong: var(--sage-strong);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-2);
+  --bg-primary: var(--bg);
+  --bg-secondary: var(--surface-2);
+  --card-bg: var(--surface);
+  --border-color: var(--border);
 
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: var(--color-text-primary);
-  background: var(--color-bg-primary);
+  color: var(--ink);
+  background: var(--bg);
+  background-image: var(--bg-tint);
+  background-attachment: fixed;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   line-height: 1.6;
 }
 
 .symmetry-app *,
 .symmetry-app *::before,
-.symmetry-app *::after {
-  box-sizing: border-box;
-}
+.symmetry-app *::after { box-sizing: border-box; }
 
 .symmetry-app h1,
 .symmetry-app h2,
@@ -77,26 +94,34 @@
 .symmetry-app h5,
 .symmetry-app h6 {
   font-family: "Livvic", "Inter", sans-serif;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--ink);
   margin: 0;
 }
 
 .symmetry-app p { margin: 0; }
-.symmetry-app a { color: inherit; }
+.symmetry-app a { color: inherit; text-decoration: none; }
 .symmetry-app button { font-family: inherit; }
+.symmetry-app ::selection { background: var(--sage-soft-2); }
+
+/* nice, quiet scrollbars inside scrollable panels */
+.symmetry-app ::-webkit-scrollbar { width: 10px; height: 10px; }
+.symmetry-app ::-webkit-scrollbar-thumb { background: rgba(51,64,58,0.18); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+.symmetry-app ::-webkit-scrollbar-track { background: transparent; }
 
 /* --------------------------------------------------------------------------
-   Layout helpers (ported, calm)
+   Layout + utility helpers (ported class names)
    -------------------------------------------------------------------------- */
-.symmetry-app .container { max-width: 1080px; margin: 0 auto; padding-left: var(--space-6); padding-right: var(--space-6); }
-.symmetry-app .py-8 { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+.symmetry-app .container { max-width: 1120px; margin: 0 auto; padding-left: clamp(16px, 4vw, 32px); padding-right: clamp(16px, 4vw, 32px); }
+.symmetry-app .py-8 { padding-top: var(--space-8); padding-bottom: calc(var(--space-8) * 2); }
 .symmetry-app .mb-2 { margin-bottom: var(--space-2); }
 .symmetry-app .mb-4 { margin-bottom: var(--space-4); }
 .symmetry-app .mb-6 { margin-bottom: var(--space-6); }
 .symmetry-app .p-3 { padding: var(--space-3); }
 .symmetry-app .p-4 { padding: var(--space-4); }
 .symmetry-app .p-6 { padding: var(--space-6); }
-.symmetry-app .p-8 { padding: var(--space-8); }
+.symmetry-app .p-8 { padding: clamp(20px, 4vw, 40px); }
 .symmetry-app .mt-1 { margin-top: var(--space-1); }
 .symmetry-app .mt-2 { margin-top: var(--space-2); }
 .symmetry-app .mt-4 { margin-top: var(--space-4); }
@@ -138,559 +163,717 @@
   .symmetry-app .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
-/* color/text helpers */
-.symmetry-app .text-primary { color: var(--color-text-primary); }
-.symmetry-app .text-secondary { color: var(--color-text-secondary); }
-.symmetry-app .text-muted { color: var(--color-text-muted); }
-.symmetry-app .text-neutral-400 { color: var(--color-text-muted); }
-.symmetry-app .text-sage { color: var(--color-primary); }
+/* text colour helpers */
+.symmetry-app .text-primary { color: var(--ink); }
+.symmetry-app .text-secondary { color: var(--ink-2); }
+.symmetry-app .text-muted { color: var(--muted) !important; }
+.symmetry-app .text-neutral-400 { color: var(--muted) !important; }
+.symmetry-app .text-sage { color: var(--sage); }
 .symmetry-app .text-serif { font-family: "Livvic", "Inter", sans-serif; }
-.symmetry-app .bg-parchment { background: var(--color-bg-primary); }
+.symmetry-app .bg-parchment { background: var(--bg); }
 
 /* --------------------------------------------------------------------------
-   Animations (gentle)
+   Gentle motion
    -------------------------------------------------------------------------- */
-@keyframes sym-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@keyframes sym-fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes sym-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes sym-fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 .symmetry-app .animate-fade-in { animation: sym-fade-in 0.7s ease both; }
-.symmetry-app .animate-fade-in-up { animation: sym-fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.symmetry-app .animate-fade-in-up { animation: sym-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both; }
 @media (prefers-reduced-motion: reduce) {
-  .symmetry-app * { animation: none !important; transition: none !important; }
+  .symmetry-app *, .symmetry-app *::before, .symmetry-app *::after { animation: none !important; transition: none !important; }
 }
 
 /* --------------------------------------------------------------------------
    Navigation
    -------------------------------------------------------------------------- */
 .symmetry-app .sage-nav {
-  background: rgba(246, 245, 241, 0.8) !important;
-  backdrop-filter: saturate(160%) blur(14px);
-  -webkit-backdrop-filter: saturate(160%) blur(14px);
-  border-bottom: 1px solid var(--color-border-soft);
+  background: rgba(255, 253, 248, 0.78) !important;
+  -webkit-backdrop-filter: saturate(150%) blur(16px);
+  backdrop-filter: saturate(150%) blur(16px);
+  border-bottom: 1px solid var(--border-soft);
   position: sticky;
   top: 0;
   z-index: 90;
   padding: 14px clamp(16px, 4vw, 40px);
 }
-.symmetry-app .sage-nav > .flex { max-width: 1080px; margin: 0 auto; }
+.symmetry-app .sage-nav > .flex { max-width: 1120px; margin: 0 auto; }
 .symmetry-app .brand-wordmark {
   font-family: "Livvic", sans-serif;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.28rem;
   letter-spacing: -0.02em;
-  color: var(--color-text-primary);
+  color: var(--ink) !important;
 }
-.symmetry-app .sage-nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
+.symmetry-app .brand-wordmark::before {
+  content: "";
+  display: inline-block;
+  width: 9px; height: 9px;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: var(--sage);
+  box-shadow: 0 0 0 4px var(--sage-soft);
+  vertical-align: middle;
+}
+.symmetry-app .sage-nav-links { display: flex; align-items: center; gap: 30px; list-style: none; margin: 0; padding: 0; }
 .symmetry-app .sage-nav-links li { margin: 0; }
 .symmetry-app .sage-nav-link {
-  color: var(--color-text-secondary);
-  text-decoration: none;
+  color: var(--ink-2);
   text-transform: capitalize;
   font-weight: 600;
   font-size: 0.92rem;
+  position: relative;
   transition: color 0.2s ease;
 }
-.symmetry-app .sage-nav-link:hover,
-.symmetry-app .sage-nav-link.active { color: var(--color-primary); }
+.symmetry-app .sage-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  height: 2px; width: 0;
+  border-radius: 999px;
+  background: var(--sage);
+  transition: width 0.25s ease;
+}
+.symmetry-app .sage-nav-link:hover { color: var(--sage-strong); }
+.symmetry-app .sage-nav-link:hover::after,
+.symmetry-app .sage-nav-link.active::after { width: 100%; }
+.symmetry-app .sage-nav-link.active { color: var(--sage-strong); }
 
 .symmetry-app .mobile-nav-toggle {
   display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 5px;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+  align-items: center; justify-content: center; flex-direction: column;
+  gap: 5px; width: 44px; height: 44px;
+  border-radius: 14px; background: transparent; border: none; cursor: pointer;
 }
-.symmetry-app .mobile-nav-toggle span { display: block; width: 20px; height: 2px; background: var(--color-text-primary) !important; border-radius: 999px; }
+.symmetry-app .mobile-nav-toggle span { display: block !important; width: 22px !important; height: 2px !important; background: var(--ink) !important; border-radius: 999px !important; }
 
 @media (max-width: 860px) {
   .symmetry-app .mobile-nav-toggle { display: flex; }
   .symmetry-app .sage-nav-links { display: none; }
   .symmetry-app .sage-nav-links.open {
     display: flex !important;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    background: var(--color-surface);
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 16px;
-    left: 16px;
-    padding: 18px 20px;
-    border-radius: 16px;
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-soft);
+    flex-direction: column; align-items: flex-start; gap: 16px;
+    background: var(--surface);
+    position: absolute; top: calc(100% + 10px); right: 16px; left: 16px;
+    padding: 20px 22px; border-radius: var(--radius-lg);
+    border: 1px solid var(--border); box-shadow: var(--shadow-soft);
   }
 }
 
 /* --------------------------------------------------------------------------
-   Cards
+   Cards / surfaces
    -------------------------------------------------------------------------- */
 .symmetry-app .glass-card {
-  background: var(--color-surface) !important;
-  border: 1px solid var(--color-border-soft) !important;
-  border-radius: var(--radius-xl);
+  background: var(--surface) !important;
+  border: 1px solid var(--border-soft) !important;
+  border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-card) !important;
+  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
 
-/* appointments placeholder (missing background image) */
+/* nested glass-cards (e.g. the small icon chip + chart inside the welcome card)
+   shouldn't carry heavy double shadows */
+.symmetry-app .glass-card .glass-card {
+  box-shadow: var(--shadow-xs) !important;
+  border-radius: var(--radius-xl);
+  background: var(--surface-2) !important;
+}
+
+/* appointments panel soft halo */
 .symmetry-app #appointments {
   background:
-    radial-gradient(1200px 240px at 50% -40%, rgba(135, 169, 107, 0.16), transparent 70%),
-    var(--color-surface) !important;
+    radial-gradient(1200px 260px at 50% -40%, var(--sage-soft), transparent 70%),
+    var(--surface) !important;
 }
 
-/* fix light-on-light inline colors */
-.symmetry-app #sessionDateDisplay { color: var(--color-text-primary) !important; letter-spacing: 0.02em; }
-
-/* stats cards */
-.symmetry-app .grid > .text-center.p-3 {
-  background: var(--color-surface-2) !important;
-  border: 1px solid var(--color-border-soft) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-}
-
-/* greeting reveal — keep visible even if JS opacity transition lags */
+/* Welcome header */
 .symmetry-app #greetingHeader,
 .symmetry-app #swahiliGreeting,
 .symmetry-app #dayDisplay { opacity: 1 !important; }
-.symmetry-app #swahiliGreeting { color: var(--color-primary) !important; }
-.symmetry-app #dayDisplay { color: var(--color-text-secondary) !important; }
+.symmetry-app #greetingHeader { color: var(--ink) !important; }
+.symmetry-app #swahiliGreeting { color: var(--sage-strong) !important; font-weight: 600; }
+.symmetry-app #dayDisplay { color: var(--ink-2) !important; }
+.symmetry-app #sessionDateDisplay { color: var(--ink) !important; letter-spacing: 0.01em; }
+
+/* the little spirit/icon chip in the header */
+.symmetry-app .glass-card .glass-card > div[style*="border-radius: 50%"] {
+  background: var(--sage-soft) !important;
+}
+
+/* Pattern Trends chart wrapper headings */
+.symmetry-app [class*="chart"] h3,
+.symmetry-app .glass-card h3 { color: var(--ink-2); }
+
+/* Welcome header: let the chart drop to its own full-width row instead of
+   being squeezed beside the greeting (legacy markup nests it in the flex row) */
+.symmetry-app .glass-card > .flex.items-center.justify-between { flex-wrap: wrap; gap: 20px; }
+.symmetry-app .glass-card > .flex.items-center.justify-between > div:first-child { flex: 1 1 240px; }
+.symmetry-app .glass-card > .flex.items-center.justify-between > div[style*="height: 360px"] {
+  flex: 1 1 100%;
+  width: 100%;
+  height: auto !important;
+  min-height: 320px;
+  margin: 8px 0 0 0 !important;
+  background: var(--surface-2) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Stats cards (override the inline glassy white)
+   -------------------------------------------------------------------------- */
+.symmetry-app .grid > .text-center.p-3 {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-soft) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xs) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  padding: 18px 14px !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.symmetry-app .grid > .text-center.p-3:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft) !important; }
+.symmetry-app .grid > .text-center.p-3 > .text-xl { color: var(--ink) !important; font-family: "Livvic", sans-serif; font-size: 1.7rem !important; }
+.symmetry-app .grid > .text-center.p-3 span { color: var(--ink-2) !important; }
+.symmetry-app #sessionsTrend, .symmetry-app #journalTrend { color: var(--sage-strong) !important; }
+.symmetry-app #progressBarFill { background: linear-gradient(90deg, var(--sage), var(--sage-strong)) !important; }
+.symmetry-app .w-full.rounded-full.h-1\.5 { background: var(--sage-soft-2) !important; }
+
+/* hide the redundant ghost chart block (duplicate canvas / dark inset) */
+.symmetry-app div[style*="inset 0 0 0 1px rgba(255,255,255,0.08)"] { display: none !important; }
 
 /* --------------------------------------------------------------------------
    Chart tabs
    -------------------------------------------------------------------------- */
 .symmetry-app .symmetry-tab {
-  background: none;
-  border: none;
-  color: var(--color-text-secondary) !important;
-  font-size: 0.85rem;
-  font-weight: 600;
+  background: none !important;
+  border: none !important;
+  color: var(--ink-2) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
   cursor: pointer;
-  padding: 6px 12px !important;
-  border-radius: var(--radius-full);
+  padding: 7px 14px !important;
+  border-radius: var(--radius-full) !important;
   opacity: 1 !important;
   transition: background 0.2s ease, color 0.2s ease;
 }
-.symmetry-app .symmetry-tab:hover { background: rgba(135, 169, 107, 0.1); }
+.symmetry-app .symmetry-tab:hover { background: var(--sage-soft) !important; color: var(--sage-strong) !important; }
 .symmetry-app .symmetry-tab.active {
-  color: var(--color-primary-strong) !important;
-  background: rgba(135, 169, 107, 0.14);
+  color: var(--sage-strong) !important;
+  background: var(--sage-soft-2) !important;
 }
 
 /* --------------------------------------------------------------------------
    Buttons
    -------------------------------------------------------------------------- */
 .symmetry-app .sage-btn,
-.symmetry-app .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 20px;
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 0.9rem;
-  border: 1px solid transparent;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-.symmetry-app .sage-btn-primary,
-.symmetry-app .btn.primary,
-.symmetry-app .btn-primary,
-.symmetry-app .btn:not(.btn-ghost):not(.sage-btn-secondary):not(.sage-btn-ghost) {
-  background: var(--color-primary);
-  color: #fff;
-}
-.symmetry-app .sage-btn-primary:hover,
-.symmetry-app .btn.primary:hover,
-.symmetry-app .btn-primary:hover { background: var(--color-primary-strong); transform: translateY(-1px); }
-.symmetry-app .sage-btn-secondary,
-.symmetry-app .sage-btn-ghost,
-.symmetry-app .btn-ghost {
-  background: transparent;
-  color: var(--color-text-primary);
-  border-color: var(--color-border);
-}
-.symmetry-app .sage-btn-secondary:hover,
-.symmetry-app .sage-btn-ghost:hover,
-.symmetry-app .btn-ghost:hover { border-color: var(--color-primary); color: var(--color-primary-strong); }
-
+.symmetry-app .btn,
+.symmetry-app .symmetry-btn,
+.symmetry-app .template-btn,
 .symmetry-app .mpesa-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 16px;
+  gap: 8px;
+  padding: 12px 22px;
   border-radius: var(--radius-full);
-  background: var(--color-primary);
-  color: #fff;
-  border: none;
   font-weight: 600;
+  font-size: 0.92rem;
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: background 0.2s ease, opacity 0.2s ease;
+  line-height: 1.1;
+  transition: transform 0.16s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
-.symmetry-app .mpesa-btn:hover { background: var(--color-primary-strong); }
-.symmetry-app .mpesa-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* primary (sage) */
+.symmetry-app .sage-btn-primary,
+.symmetry-app .btn.primary,
+.symmetry-app .btn-primary,
+.symmetry-app .mpesa-btn,
+.symmetry-app .btn:not(.btn-ghost):not(.sage-btn-secondary):not(.sage-btn-ghost) {
+  background: var(--sage) !important;
+  color: #fffdf8 !important;
+  border-color: transparent !important;
+  box-shadow: 0 14px 26px -16px rgba(95, 125, 80, 0.7);
+}
+.symmetry-app .sage-btn-primary:hover,
+.symmetry-app .btn.primary:hover,
+.symmetry-app .btn-primary:hover,
+.symmetry-app .mpesa-btn:hover {
+  background: var(--sage-strong) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 18px 30px -16px rgba(95, 125, 80, 0.8);
+}
+
+/* secondary / ghost */
+.symmetry-app .sage-btn-secondary,
+.symmetry-app .sage-btn-ghost,
+.symmetry-app .btn-ghost {
+  background: transparent !important;
+  color: var(--ink) !important;
+  border-color: var(--border) !important;
+  box-shadow: none;
+}
+.symmetry-app .sage-btn-secondary:hover,
+.symmetry-app .sage-btn-ghost:hover,
+.symmetry-app .btn-ghost:hover {
+  border-color: var(--sage) !important;
+  color: var(--sage-strong) !important;
+  background: var(--sage-soft) !important;
+}
+
+.symmetry-app .mpesa-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+.symmetry-app button:focus-visible,
+.symmetry-app a:focus-visible,
+.symmetry-app input:focus-visible,
+.symmetry-app textarea:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
 
 /* --------------------------------------------------------------------------
-   Utilities grid (tiles)
+   Utility tiles (the "Your Utilities" grid)
    -------------------------------------------------------------------------- */
 .symmetry-app .utility-tile {
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 6px;
-  padding: 22px 14px;
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border-soft);
-  border-radius: var(--radius-lg);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  gap: 8px;
+  padding: 26px 16px !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border-soft) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .symmetry-app .utility-tile:hover {
-  transform: translateY(-3px);
-  border-color: rgba(135, 169, 107, 0.4);
+  transform: translateY(-4px);
+  border-color: var(--sage-soft-2) !important;
   box-shadow: var(--shadow-soft);
 }
-.symmetry-app .utility-tile div { color: var(--color-text-primary) !important; }
+.symmetry-app .utility-tile svg { color: var(--sage); stroke: var(--sage) !important; }
+.symmetry-app .utility-tile div { color: var(--ink) !important; font-size: 0.9rem; }
 
-/* Expanded panels — force light + readable (overrides dark-theme inline text) */
+/* Expanded panels — force calm, readable surfaces */
 .symmetry-app .utility-expanded {
-  background: var(--color-surface) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius-lg) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-xl) !important;
   box-shadow: var(--shadow-card) !important;
-  color: var(--color-text-primary) !important;
+  color: var(--ink) !important;
+  padding: clamp(20px, 3vw, 32px) !important;
 }
+.symmetry-app .utility-expanded h2,
 .symmetry-app .utility-expanded h3,
 .symmetry-app .utility-expanded h4,
 .symmetry-app .utility-expanded h5,
-.symmetry-app .utility-expanded strong { color: var(--color-text-primary) !important; }
-.symmetry-app .utility-expanded p,
-.symmetry-app .utility-expanded span,
+.symmetry-app .utility-expanded strong,
 .symmetry-app .utility-expanded label,
-.symmetry-app .utility-expanded li { color: var(--color-text-secondary) !important; }
-/* the faint header strip inside expanded panels */
-.symmetry-app .utility-expanded > div[style*="rgba(255,255,255,0.08)"] {
-  background: rgba(135, 169, 107, 0.08) !important;
+.symmetry-app .utility-expanded span { color: var(--ink) !important; }
+.symmetry-app .utility-expanded p,
+.symmetry-app .utility-expanded li { color: var(--ink-2) !important; }
+/* faint header strip inside expanded panels (was translucent white on dark) */
+.symmetry-app .utility-expanded > div[style*="rgba(255,255,255,0.08)"],
+.symmetry-app .utility-expanded div[style*="rgba(255,255,255,0.08)"] {
+  background: var(--sage-soft) !important;
+  border-color: var(--border-soft) !important;
 }
+/* nested cards within expanded panels */
+.symmetry-app .utility-expanded div[style*="background: rgba(255, 255, 255, 0.95)"] {
+  background: var(--surface-2) !important;
+  border-color: var(--border-soft) !important;
+}
+
+/* momentum circles */
+.symmetry-app .momentum-circle {
+  width: 24px !important; height: 24px !important;
+  border-radius: 50% !important;
+  border: 2px solid var(--sage-soft-2) !important;
+  background: transparent;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.symmetry-app .momentum-circle.filled,
+.symmetry-app .momentum-circle.active {
+  background: var(--sage) !important;
+  border-color: var(--sage) !important;
+  transform: scale(1.05);
+}
+
+/* inputs/textareas inside expanded panels and modals */
+.symmetry-app input[type="text"],
+.symmetry-app input[type="date"],
+.symmetry-app input[type="time"],
+.symmetry-app input[type="file"],
+.symmetry-app textarea {
+  background: var(--surface-2) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+}
+.symmetry-app input::placeholder,
+.symmetry-app textarea::placeholder { color: var(--muted) !important; }
+.symmetry-app input:focus,
+.symmetry-app textarea:focus { border-color: var(--sage) !important; background: var(--surface) !important; }
+
+/* small round + add button (eisenhower input) */
+.symmetry-app button[aria-label="Add task"] {
+  background: var(--sage) !important;
+  color: #fffdf8 !important;
+  border-radius: 50% !important;
+}
+
+/* drop zones keep dashed look but calmer */
+.symmetry-app #eisenDoNowZone { border-color: var(--sage-soft-2) !important; background: var(--sage-soft) !important; }
+.symmetry-app #eisenDeferZone { border-color: var(--border) !important; background: var(--surface-2) !important; }
+
+/* pulse timer display */
+.symmetry-app #pulseDisplay { color: var(--sage-strong) !important; }
+
+/* fog clearer starts blurred (kept as the intended effect) */
+.symmetry-app #fogClearerInput { filter: blur(4px); transition: filter 0.5s ease; }
 
 /* --------------------------------------------------------------------------
    Bento / booking
    -------------------------------------------------------------------------- */
 .symmetry-app .bento-item {
-  background: var(--color-surface-2) !important;
-  border: 1px solid var(--color-border-soft);
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border-soft) !important;
   border-radius: var(--radius-lg) !important;
+  padding: 16px !important;
+  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
+.symmetry-app .bento-item h3 { color: var(--ink) !important; }
 .symmetry-app .booking-date-grid button,
 .symmetry-app .booking-time-grid button {
-  padding: 8px 6px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  border-radius: 10px;
+  padding: 9px 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
   font-size: 0.78rem;
-  color: var(--color-text-primary);
+  font-weight: 600;
+  color: var(--ink);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 .symmetry-app .booking-date-grid button:hover,
-.symmetry-app .booking-time-grid button:hover { border-color: var(--color-primary); }
+.symmetry-app .booking-time-grid button:hover { border-color: var(--sage); color: var(--sage-strong); background: var(--sage-soft); }
 .symmetry-app .booking-date-grid button.selected,
 .symmetry-app .booking-time-grid button.selected,
 .symmetry-app .booking-date-grid button[aria-pressed="true"],
 .symmetry-app .booking-time-grid button[aria-pressed="true"] {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #fff;
+  background: var(--sage) !important;
+  border-color: var(--sage) !important;
+  color: #fffdf8 !important;
 }
 
 /* --------------------------------------------------------------------------
-   Generic modal overlays (class-toggled)
+   Floating actions (safe harbor + info icon)
+   -------------------------------------------------------------------------- */
+.symmetry-app .sage-safe-harbor {
+  position: fixed; right: 24px; bottom: 24px;
+  display: flex; align-items: center; justify-content: center;
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: var(--surface) !important;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  z-index: 200;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.symmetry-app .sage-safe-harbor:hover { transform: translateY(-2px) scale(1.04); box-shadow: var(--shadow-pop); }
+.symmetry-app .sage-safe-harbor svg { width: 26px; height: 26px; }
+
+.symmetry-app .info-icon {
+  position: fixed; left: 24px; bottom: 24px;
+  display: flex; align-items: center; justify-content: center;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  color: var(--ink-2);
+  cursor: pointer;
+  z-index: 200;
+  transition: transform 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.symmetry-app .info-icon:hover { color: var(--sage-strong); transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+
+/* --------------------------------------------------------------------------
+   Modals — unified calm overlays
    -------------------------------------------------------------------------- */
 .symmetry-app .sage-support-modal,
 .symmetry-app .sage-welcome-overlay,
 .symmetry-app .glass-modal,
-.symmetry-app .booking-modal-overlay {
+.symmetry-app .booking-modal-overlay,
+.symmetry-app .symmetry-modal,
+.symmetry-app .check-in-modal,
+.symmetry-app .care-plan-modal,
+.symmetry-app .clarity-engine-modal {
   position: fixed;
   inset: 0;
-  display: none;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(20, 26, 30, 0.45);
-  backdrop-filter: blur(6px);
+  background: rgba(51, 64, 58, 0.34) !important;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   z-index: 4000;
 }
+/* class-toggled overlays default hidden, .active shows */
+.symmetry-app .sage-support-modal,
+.symmetry-app .sage-welcome-overlay,
+.symmetry-app .glass-modal,
+.symmetry-app .booking-modal-overlay,
+.symmetry-app .symmetry-modal { display: none; }
 .symmetry-app .sage-support-modal.active,
 .symmetry-app .sage-welcome-overlay.active,
 .symmetry-app .glass-modal.active,
-.symmetry-app .booking-modal-overlay.active { display: flex; }
+.symmetry-app .booking-modal-overlay.active,
+.symmetry-app .symmetry-modal.active { display: flex; }
 
+/* JS-toggled (style.display) overlays — when shown become flex */
+.symmetry-app .check-in-modal[style*="display: flex"],
+.symmetry-app .care-plan-modal[style*="display: flex"],
+.symmetry-app .clarity-engine-modal[style*="display: flex"],
+.symmetry-app .check-in-modal[style*="display:flex"],
+.symmetry-app .care-plan-modal[style*="display:flex"],
+.symmetry-app .clarity-engine-modal[style*="display:flex"] { display: flex !important; }
+
+/* generic inner panel for every modal: force calm light surface */
 .symmetry-app .sage-support-content,
-.symmetry-app .sage-welcome-content {
+.symmetry-app .sage-welcome-content,
+.symmetry-app .symmetry-card,
+.symmetry-app .booking-modal,
+.symmetry-app .glass-modal > div,
+.symmetry-app .check-in-modal > div,
+.symmetry-app .care-plan-modal > div,
+.symmetry-app .clarity-engine-modal > div {
   position: relative;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 36px;
-  max-width: 420px;
+  background: var(--surface) !important;
+  background-image: none !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-2xl) !important;
+  box-shadow: var(--shadow-pop) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  max-width: 640px;
   width: 100%;
-  text-align: center;
-  box-shadow: var(--shadow-soft);
+  padding: clamp(24px, 4vw, 38px) !important;
+  max-height: 88vh;
+  overflow-y: auto;
 }
+.symmetry-app .sage-support-content,
+.symmetry-app .sage-welcome-content { max-width: 440px; text-align: center; }
+
+/* neutralise dark inline text inside the converted-from-dark modals */
+.symmetry-app .glass-modal h2,
+.symmetry-app .glass-modal h3,
+.symmetry-app .check-in-modal h2,
+.symmetry-app .check-in-modal h3,
+.symmetry-app .check-in-modal h4,
+.symmetry-app .check-in-modal label,
+.symmetry-app .care-plan-modal h2,
+.symmetry-app .care-plan-modal h3,
+.symmetry-app .clarity-engine-modal h2,
+.symmetry-app .clarity-engine-modal h3,
+.symmetry-app .clarity-engine-modal h4,
+.symmetry-app .clarity-engine-modal h5 { color: var(--ink) !important; }
+.symmetry-app .glass-modal p,
+.symmetry-app .glass-modal li,
+.symmetry-app .check-in-modal p,
+.symmetry-app .check-in-modal span,
+.symmetry-app .care-plan-modal p,
+.symmetry-app .care-plan-modal div,
+.symmetry-app .clarity-engine-modal p { color: var(--ink-2) !important; }
+.symmetry-app .check-in-modal #moodValue,
+.symmetry-app .check-in-modal #energyValue,
+.symmetry-app .check-in-modal #sleepValue { color: var(--sage-strong) !important; }
+.symmetry-app .clinical-insight-header { color: var(--ink) !important; }
+
+/* nested coloured info blocks inside care-plan / clarity stay soft sage */
+.symmetry-app .care-plan-modal div[style*="rgba(135, 169, 107, 0.1)"],
+.symmetry-app .clarity-engine-modal div[style*="rgba(135, 169, 107"] { background: var(--sage-soft) !important; }
+.symmetry-app .care-plan-modal div[style*="#F5F5F0"] { background: var(--surface-2) !important; }
+
+/* modal close buttons */
+.symmetry-app .modal-close-btn,
+.symmetry-app .symmetry-close,
+.symmetry-app .booking-modal__close {
+  position: absolute;
+  top: 18px; right: 18px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border) !important;
+  background: var(--surface-2) !important;
+  color: var(--ink-2) !important;
+  font-size: 20px; line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.symmetry-app .modal-close-btn:hover,
+.symmetry-app .symmetry-close:hover,
+.symmetry-app .booking-modal__close:hover { color: var(--ink) !important; border-color: var(--sage) !important; }
+
+/* support modal specifics */
 .symmetry-app .sage-support-title,
-.symmetry-app .sage-welcome-title { font-size: 1.5rem; color: var(--color-text-primary); margin-bottom: 8px; }
-.symmetry-app .sage-support-label { font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 16px; }
-.symmetry-app .sage-support-number { display: block; font-size: 1.25rem; font-weight: 700; color: var(--color-primary); text-decoration: none; margin-top: 4px; }
-.symmetry-app .sage-welcome-subtitle { color: var(--color-text-secondary); margin: 8px 0 20px; }
-.symmetry-app .sage-swahili-subtext { display: block; font-size: 0.7rem; opacity: 0.7; }
+.symmetry-app .sage-welcome-title { font-size: 1.5rem; color: var(--ink); margin-bottom: 8px; }
+.symmetry-app .sage-support-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 18px; }
+.symmetry-app .sage-support-number { display: block; font-size: 1.3rem; font-weight: 700; color: var(--sage-strong); margin-top: 4px; }
+.symmetry-app .sage-welcome-subtitle { color: var(--ink-2); margin: 8px 0 20px; }
+.symmetry-app .sage-swahili-subtext { display: block; font-size: 0.7rem; opacity: 0.75; }
 .symmetry-app .sage-close-support { margin-top: 24px; }
 
-.symmetry-app .modal-close-btn {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--color-border);
-  background: transparent;
-  color: var(--color-text-secondary);
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.symmetry-app .modal-close-btn:hover { color: var(--color-text-primary); border-color: var(--color-primary); }
-
-/* --------------------------------------------------------------------------
-   Symmetry identity modal
-   -------------------------------------------------------------------------- */
-.symmetry-app .symmetry-modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(20, 26, 30, 0.5);
-  backdrop-filter: blur(8px);
-  z-index: 5000;
-}
-.symmetry-app .symmetry-modal.active { display: flex; }
-.symmetry-app .symmetry-card {
-  position: relative;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 32px;
-  max-width: 420px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow-soft);
-}
-.symmetry-app .symmetry-close {
-  position: absolute; top: 16px; right: 16px;
-  width: 30px; height: 30px; border: none; background: transparent;
-  color: var(--color-primary); font-size: 22px; cursor: pointer; border-radius: 50%;
-}
-.symmetry-app .symmetry-close:hover { background: rgba(135, 169, 107, 0.12); }
-.symmetry-app .symmetry-title { font-size: 1.5rem; color: var(--color-text-primary); margin-bottom: 6px; text-align: center; }
-.symmetry-app .symmetry-subtitle { font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 24px; text-align: center; }
-.symmetry-app .symmetry-field { margin-bottom: 16px; }
-.symmetry-app .symmetry-label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--color-primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-.symmetry-app .symmetry-input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem;
-  color: var(--color-text-primary);
-  background: var(--color-surface-2);
-}
-.symmetry-app .symmetry-input:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(135, 169, 107, 0.12); }
-.symmetry-app .symmetry-btn {
-  width: 100%;
-  padding: 13px 18px;
-  background: var(--color-primary);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: background 0.2s ease, transform 0.15s ease;
-}
-.symmetry-app .symmetry-btn:hover { background: var(--color-primary-strong); transform: translateY(-1px); }
-.symmetry-app .seed-grid .seed-word,
-.symmetry-app #seedDisplay > div {
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  padding: 8px 10px;
-  font-size: 0.85rem;
-  color: var(--color-text-primary);
+/* language toggle button */
+.symmetry-app .lang-toggle-btn {
+  background: transparent !important;
+  color: var(--sage-strong) !important;
+  border: 1px solid var(--sage-soft-2) !important;
+  border-radius: 999px !important;
 }
 
 /* --------------------------------------------------------------------------
-   Check-in pulse steps / ratings / chips
+   Booking form
    -------------------------------------------------------------------------- */
-.symmetry-app .step-indicator { opacity: 1; }
-.symmetry-app .rating-btn,
-.symmetry-app .context-chip {
-  padding: 8px 14px;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  background: rgba(255, 255, 255, 0.04);
-  color: #cbd5e1;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-.symmetry-app .rating-btn:hover,
-.symmetry-app .context-chip:hover { border-color: var(--color-primary); color: #fff; }
-.symmetry-app .rating-btn.selected,
-.symmetry-app .rating-btn.active,
-.symmetry-app .context-chip.selected,
-.symmetry-app .context-chip.active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #fff;
-}
-
-/* range sliders accent */
-.symmetry-app input[type="range"] { accent-color: var(--color-primary); }
-
-/* --------------------------------------------------------------------------
-   Booking modal (no inline styles in markup)
-   -------------------------------------------------------------------------- */
-.symmetry-app .booking-modal {
-  position: relative;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: 28px;
-  max-width: 520px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow-soft);
-}
-.symmetry-app .booking-modal__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
-.symmetry-app .booking-modal__header h2 { font-size: 1.4rem; color: var(--color-text-primary); }
-.symmetry-app .booking-modal__close { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--color-border); background: transparent; font-size: 20px; cursor: pointer; color: var(--color-text-secondary); }
+.symmetry-app .booking-modal__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+.symmetry-app .booking-modal__header h2 { font-size: 1.4rem; }
 .symmetry-app .booking-form { display: flex; flex-direction: column; gap: 16px; }
 .symmetry-app .booking-form__row { display: flex; flex-direction: column; gap: 6px; }
-.symmetry-app .booking-form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.symmetry-app .booking-form label { font-size: 0.78rem; font-weight: 600; color: var(--color-text-secondary); }
-.symmetry-app .booking-form input[type="text"],
-.symmetry-app .booking-form input[type="date"],
-.symmetry-app .booking-form input[type="time"] {
-  padding: 11px 13px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  font-size: 0.92rem;
-  color: var(--color-text-primary);
-  background: var(--color-surface-2);
+.symmetry-app .booking-form__row label,
+.symmetry-app .booking-form__row legend { font-size: 0.82rem; font-weight: 600; color: var(--ink-2); }
+.symmetry-app .booking-form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.symmetry-app .field-summary {
+  background: var(--sage-soft); border: 1px solid var(--border-soft);
+  border-radius: 14px; padding: 12px 14px; font-size: 0.85rem; color: var(--ink-2);
 }
-.symmetry-app .booking-form input:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(135, 169, 107, 0.12); }
-.symmetry-app .field-summary { font-size: 0.82rem; color: var(--color-text-secondary); background: var(--color-surface-2); border: 1px solid var(--color-border-soft); padding: 12px; border-radius: var(--radius-sm); }
-.symmetry-app .segmented-control { display: inline-flex; gap: 4px; background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-full); padding: 4px; }
-.symmetry-app .segmented-control input { position: absolute; opacity: 0; pointer-events: none; }
-.symmetry-app .segmented-control label { padding: 8px 18px; border-radius: var(--radius-full); font-size: 0.82rem; font-weight: 600; cursor: pointer; color: var(--color-text-secondary); }
-.symmetry-app .segmented-control input:checked + label { background: var(--color-primary); color: #fff; }
-.symmetry-app .booking-form__actions { display: flex; gap: 12px; margin-top: 4px; }
+.symmetry-app .field-summary strong { color: var(--ink); }
+.symmetry-app .booking-form__actions { display: flex; gap: 12px; margin-top: 6px; }
 .symmetry-app .booking-form__actions .btn { flex: 1; }
-.symmetry-app .booking-note { font-size: 0.74rem; color: var(--color-text-muted); margin-top: 14px; text-align: center; }
+.symmetry-app .booking-note { margin-top: 16px; font-size: 0.78rem; color: var(--muted); text-align: center; }
 .symmetry-app .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
+/* segmented control */
+.symmetry-app .segmented-control {
+  display: inline-flex;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+.symmetry-app .segmented-control input { position: absolute; opacity: 0; pointer-events: none; }
+.symmetry-app .segmented-control label {
+  padding: 8px 18px; border-radius: 999px; font-size: 0.85rem; font-weight: 600;
+  color: var(--ink-2); cursor: pointer; transition: all 0.18s ease;
+}
+.symmetry-app .segmented-control input:checked + label { background: var(--sage); color: #fffdf8; }
+
 /* --------------------------------------------------------------------------
-   Clarity engine templates
+   Identity / seed card (symmetry-modal)
    -------------------------------------------------------------------------- */
+.symmetry-app .symmetry-card { max-width: 520px; text-align: left; }
+.symmetry-app .symmetry-title { font-size: 1.6rem; margin-bottom: 6px; color: var(--ink) !important; }
+.symmetry-app .symmetry-subtitle { color: var(--ink-2); margin-bottom: 22px; font-size: 0.92rem; }
+.symmetry-app .symmetry-field { margin-bottom: 16px; }
+.symmetry-app .symmetry-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; }
+.symmetry-app .symmetry-input {
+  width: 100%; padding: 12px 14px;
+  background: var(--surface-2) !important; color: var(--ink) !important;
+  border: 1px solid var(--border) !important; border-radius: 14px !important;
+  font-size: 0.92rem;
+}
+.symmetry-app .symmetry-btn {
+  width: 100%; justify-content: center;
+  background: var(--sage) !important; color: #fffdf8 !important;
+  border: none; padding: 13px 20px; border-radius: 999px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 14px 26px -16px rgba(95, 125, 80, 0.7);
+}
+.symmetry-app .symmetry-btn:hover { background: var(--sage-strong) !important; }
+.symmetry-app .seed-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+
+/* --------------------------------------------------------------------------
+   Check-in modal — sliders, ratings, chips, steps
+   -------------------------------------------------------------------------- */
+.symmetry-app .step-indicator { height: 4px; border-radius: 999px; background: var(--surface-3) !important; transition: background 0.3s ease; }
+.symmetry-app .step-indicator.active { background: var(--sage) !important; }
+
+.symmetry-app input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 6px; border-radius: 999px;
+  background: var(--surface-3) !important;
+  outline: none;
+}
+.symmetry-app input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--sage); border: 3px solid #fffdf8;
+  box-shadow: 0 4px 10px rgba(95,125,80,0.4); cursor: pointer;
+}
+.symmetry-app input[type="range"]::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--sage); border: 3px solid #fffdf8; cursor: pointer;
+}
+
+.symmetry-app .rating-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.symmetry-app .rating-btn {
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  color: var(--ink-2); font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  transition: all 0.16s ease;
+}
+.symmetry-app .rating-btn:hover { border-color: var(--sage); color: var(--sage-strong); }
+.symmetry-app .rating-btn.active,
+.symmetry-app .rating-btn.selected { background: var(--sage); border-color: var(--sage); color: #fffdf8; }
+
+.symmetry-app .context-chip {
+  padding: 9px 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  color: var(--ink); font-size: 0.82rem; font-weight: 500; cursor: pointer;
+  transition: all 0.16s ease;
+}
+.symmetry-app .context-chip:hover { border-color: var(--sage); background: var(--sage-soft); }
+.symmetry-app .context-chip.active,
+.symmetry-app .context-chip.selected { background: var(--sage-soft-2); border-color: var(--sage); color: var(--sage-strong); }
+
+/* clarity engine template buttons */
 .symmetry-app .template-btn {
-  padding: 10px 16px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
+  display: block; width: 100%; text-align: left;
+  background: var(--surface-2) !important; border: 2px solid transparent !important;
+  border-radius: 16px !important; padding: 16px !important; cursor: pointer;
 }
-.symmetry-app .template-btn:hover,
-.symmetry-app .template-btn.active { border-color: var(--color-primary); color: var(--color-primary-strong); }
-.symmetry-app .clinical-insight-header { font-weight: 600; }
+.symmetry-app .template-btn.active { background: var(--sage-soft) !important; border-color: var(--sage) !important; }
+.symmetry-app .template-btn div { color: var(--ink) !important; }
+.symmetry-app .template-btn div + div { color: var(--ink-2) !important; }
 
 /* --------------------------------------------------------------------------
-   Floating helpers
-   -------------------------------------------------------------------------- */
-.symmetry-app .sage-safe-harbor {
-  position: fixed; right: 24px; bottom: 24px;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-soft);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; z-index: 80;
-  transition: transform 0.18s ease;
-}
-.symmetry-app .sage-safe-harbor:hover { transform: translateY(-2px); }
-.symmetry-app .info-icon {
-  position: fixed; left: 24px; bottom: 24px;
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-secondary);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; z-index: 80;
-}
-.symmetry-app .info-icon:hover { color: var(--color-primary); }
-
-/* --------------------------------------------------------------------------
-   Footer (replaces nicepage u-* styling)
+   Footer (builder-generated u-* classes)
    -------------------------------------------------------------------------- */
 .symmetry-app .u-footer {
-  background: #20262a;
-  color: #cfd6d2;
-  padding: 48px clamp(16px, 5vw, 64px);
+  background: var(--ink) !important;
+  color: #e9efe7 !important;
   margin-top: 48px;
+  padding: 48px clamp(16px, 4vw, 40px) !important;
 }
-.symmetry-app .u-sheet { max-width: 1080px; margin: 0 auto; }
-.symmetry-app .u-layout-row { display: flex; flex-wrap: wrap; gap: 32px; }
-.symmetry-app .u-layout-cell { flex: 1 1 220px; }
-.symmetry-app .u-footer .u-btn {
-  display: block;
-  color: #cfd6d2;
-  text-decoration: none;
-  padding: 6px 0;
-  font-size: 0.9rem;
-  border: none !important;
-  transition: color 0.2s ease;
-}
-.symmetry-app .u-footer .u-btn:hover { color: var(--color-primary); }
-.symmetry-app .u-footer .u-text { color: #aab2ad; font-size: 0.9rem; margin: 4px 0; }
-.symmetry-app .u-line { border: none; border-top: 1px solid rgba(255, 255, 255, 0.12); margin: 28px 0 16px; }
-.symmetry-app .u-footer .u-text-4 { font-size: 0.8rem; color: #8c948f; }
+.symmetry-app .u-sheet { max-width: 1120px; margin: 0 auto; }
+.symmetry-app .u-footer .u-layout-row { display: flex; flex-wrap: wrap; gap: 32px; }
+.symmetry-app .u-footer .u-layout-cell { flex: 1 1 200px; }
+.symmetry-app .u-footer .u-container-layout { display: flex; flex-direction: column; gap: 8px; }
+.symmetry-app .u-footer a { color: #cfdac9 !important; font-weight: 600; font-size: 0.9rem; transition: color 0.2s ease; }
+.symmetry-app .u-footer a:hover { color: var(--sage) !important; }
+.symmetry-app .u-footer .u-text { color: #b9c5b3 !important; font-size: 0.9rem; margin: 0; }
+.symmetry-app .u-footer .u-line { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin: 32px 0 18px; }
+.symmetry-app .u-footer .u-text-4 { color: #93a18c !important; font-size: 0.82rem; }
+.symmetry-app .u-footer .u-position { display: none; }
 
 /* --------------------------------------------------------------------------
-   Toast (created by JS)
+   Generic safety net: neutralise stray near-black inline backgrounds
+   (e.g. nav inline #1a1a1a) and pure-white-on-dark inline text leftovers
    -------------------------------------------------------------------------- */
-.symmetry-app .sym-toast,
-#luamToast,
-.luam-toast { font-family: "Inter", sans-serif; }
+.symmetry-app nav[style*="#1a1a1a"] { background: rgba(255,253,248,0.78) !important; }
+
+/* responsive niceties */
+@media (max-width: 700px) {
+  .symmetry-app .booking-form__grid { grid-template-columns: 1fr; }
+  .symmetry-app .seed-grid { grid-template-columns: repeat(2, 1fr); }
+  .symmetry-app .text-4xl { font-size: 2rem; }
+  .symmetry-app .glass-card .flex.items-center.justify-between { flex-direction: column; gap: 16px; }
+}
