@@ -2453,13 +2453,17 @@
 
     function updateModalLanguage() {
       const t = translations[currentLanguage];
-      document.getElementById('modalTitle').textContent = t.modalTitle;
-      document.getElementById('disclaimerTitle').textContent = t.disclaimerTitle;
-      document.getElementById('disclaimerText').textContent = t.disclaimerText;
-      document.getElementById('privacyTitle').textContent = t.privacyTitle;
-      document.getElementById('privacyText').textContent = t.privacyText;
-      document.getElementById('consentBtn').textContent = t.consentBtn;
-      document.getElementById('langToggleBtn').textContent = t.langBtn;
+      const setText = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      };
+      setText('modalTitle', t.modalTitle);
+      setText('disclaimerTitle', t.disclaimerTitle);
+      setText('disclaimerText', t.disclaimerText);
+      setText('privacyTitle', t.privacyTitle);
+      setText('privacyText', t.privacyText);
+      setText('consentBtn', t.consentBtn);
+      setText('langToggleBtn', t.langBtn);
     }
     
     // Theme Toggle Functionality
