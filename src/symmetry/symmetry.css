@@ -530,7 +530,7 @@
 .symmetry-app #fogClearerInput { filter: blur(4px); transition: filter 0.5s ease; }
 
 /* --------------------------------------------------------------------------
-   Bento / booking
+   Bento / booking studio
    -------------------------------------------------------------------------- */
 .symmetry-app .bento-item {
   background: var(--surface-2) !important;
@@ -541,27 +541,148 @@
   backdrop-filter: none !important;
 }
 .symmetry-app .bento-item h3 { color: var(--ink) !important; }
-.symmetry-app .booking-date-grid button,
-.symmetry-app .booking-time-grid button {
-  padding: 9px 6px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 12px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--ink);
-  cursor: pointer;
-  transition: all 0.15s ease;
+
+.symmetry-app .booking-studio { padding: 4px 2px; }
+.symmetry-app .booking-studio__head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; margin-bottom: 24px;
 }
-.symmetry-app .booking-date-grid button:hover,
-.symmetry-app .booking-time-grid button:hover { border-color: var(--sage); color: var(--sage-strong); background: var(--sage-soft); }
-.symmetry-app .booking-date-grid button.selected,
-.symmetry-app .booking-time-grid button.selected,
-.symmetry-app .booking-date-grid button[aria-pressed="true"],
-.symmetry-app .booking-time-grid button[aria-pressed="true"] {
-  background: var(--sage) !important;
-  border-color: var(--sage) !important;
-  color: #fffdf8 !important;
+.symmetry-app .booking-eyebrow {
+  display: inline-block; font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; font-weight: var(--weight-bold); color: var(--sage-strong);
+}
+.symmetry-app .booking-title {
+  font-family: 'Livvic', sans-serif; font-size: 1.75rem; font-weight: var(--weight-semibold);
+  color: var(--ink); margin: 6px 0 6px; line-height: 1.15;
+}
+.symmetry-app .booking-sub { color: var(--ink-2); font-size: 0.9rem; line-height: 1.5; max-width: 46ch; }
+.symmetry-app .booking-viewall {
+  flex: none; font-size: 0.8rem; font-weight: var(--weight-semibold); color: var(--sage-strong);
+  text-decoration: none; padding: 9px 16px; border-radius: var(--radius-full);
+  border: 1px solid var(--border); background: var(--surface); transition: all 0.2s ease;
+}
+.symmetry-app .booking-viewall:hover { border-color: var(--sage); background: var(--sage-soft); }
+
+.symmetry-app .booking-studio__grid {
+  display: grid; grid-template-columns: 1.55fr 1fr; gap: 18px; align-items: start;
+}
+.symmetry-app .booking-panel {
+  background: var(--surface); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-xs);
+  display: flex; flex-direction: column; gap: 24px;
+}
+.symmetry-app .booking-step__label {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 0.85rem; font-weight: var(--weight-bold); color: var(--ink); margin-bottom: 14px;
+}
+.symmetry-app .booking-step__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--sage-soft); color: var(--sage-strong);
+  font-size: 0.72rem; font-weight: var(--weight-bold);
+}
+
+/* date cards */
+.symmetry-app .booking-date-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 8px;
+}
+.symmetry-app .day-card {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 12px 6px; border: 1px solid var(--border); background: var(--surface-2);
+  border-radius: 16px; cursor: pointer; transition: all 0.18s ease;
+}
+.symmetry-app .day-card__month { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: var(--weight-bold); }
+.symmetry-app .day-card__num { font-size: 1.3rem; font-weight: var(--weight-bold); color: var(--ink); line-height: 1; }
+.symmetry-app .day-card__day { font-size: 0.68rem; color: var(--ink-2); font-weight: var(--weight-semibold); }
+.symmetry-app .day-card:hover { border-color: var(--sage); background: var(--sage-soft); transform: translateY(-2px); }
+.symmetry-app .day-card.selected {
+  background: linear-gradient(160deg, var(--sage), var(--sage-strong)) !important;
+  border-color: var(--sage-strong);
+  box-shadow: 0 14px 26px -14px rgba(95, 125, 80, 0.7);
+}
+.symmetry-app .day-card.selected .day-card__month,
+.symmetry-app .day-card.selected .day-card__num,
+.symmetry-app .day-card.selected .day-card__day { color: #fffdf8; }
+
+/* time pills */
+.symmetry-app .booking-time-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px;
+}
+.symmetry-app .time-pill {
+  padding: 11px 8px; border: 1px solid var(--border); background: var(--surface-2);
+  border-radius: var(--radius-full); font-size: 0.8rem; font-weight: var(--weight-semibold);
+  color: var(--ink); cursor: pointer; transition: all 0.18s ease;
+}
+.symmetry-app .time-pill:hover { border-color: var(--sage); background: var(--sage-soft); color: var(--sage-strong); transform: translateY(-2px); }
+.symmetry-app .time-pill.selected {
+  background: linear-gradient(160deg, var(--sage), var(--sage-strong)) !important;
+  border-color: var(--sage-strong); color: #fffdf8 !important;
+  box-shadow: 0 14px 26px -14px rgba(95, 125, 80, 0.7);
+}
+
+/* summary */
+.symmetry-app .booking-summary {
+  background: linear-gradient(170deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border-soft); border-radius: var(--radius-xl);
+  padding: 24px; box-shadow: var(--shadow-card);
+  display: flex; flex-direction: column; gap: 16px;
+  position: sticky; top: 18px;
+}
+.symmetry-app .booking-summary__slot {
+  font-family: 'Livvic', sans-serif; font-size: 1.05rem; font-weight: var(--weight-semibold);
+  color: var(--muted); line-height: 1.4;
+}
+.symmetry-app .booking-summary__slot.is-set { color: var(--ink); }
+.symmetry-app .booking-summary__meta {
+  display: flex; flex-direction: column; gap: 11px;
+  padding: 16px 0; border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);
+}
+.symmetry-app .booking-meta-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; }
+.symmetry-app .booking-meta-row span { color: var(--ink-2); }
+.symmetry-app .booking-meta-row strong { color: var(--ink); font-weight: var(--weight-semibold); }
+.symmetry-app .booking-summary .mpesa-btn,
+.symmetry-app .booking-summary .btn { width: 100%; margin: 0; }
+.symmetry-app .booking-summary__note { text-align: center; font-size: 0.72rem; color: var(--muted); }
+
+/* upcoming */
+.symmetry-app .booking-upcoming {
+  margin-top: 18px; background: var(--surface); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-xl); padding: 24px;
+}
+.symmetry-app .booking-upcoming__list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;
+}
+.symmetry-app .booking-card {
+  background: var(--surface-2); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.symmetry-app .booking-card__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.symmetry-app .booking-card__type { margin: 0; color: var(--ink); font-weight: var(--weight-bold); }
+.symmetry-app .booking-card__name { color: var(--ink-2); }
+.symmetry-app .booking-card__status {
+  color: var(--sage-strong); font-weight: var(--weight-bold); font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.06em; background: var(--sage-soft);
+  padding: 4px 10px; border-radius: var(--radius-full);
+}
+.symmetry-app .booking-card__when {
+  display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+  color: var(--ink); font-weight: var(--weight-semibold); font-size: 0.9rem;
+}
+.symmetry-app .booking-card__contact { margin: 0; color: var(--ink-2); font-size: 0.85rem; line-height: 1.5; }
+.symmetry-app .booking-empty {
+  padding: 28px; border-radius: var(--radius-lg);
+  background: var(--surface-2); border: 1px dashed var(--border);
+  color: var(--ink-2); text-align: center; font-size: 0.9rem; line-height: 1.5;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 760px) {
+  .symmetry-app .booking-studio__grid { grid-template-columns: 1fr; }
+  .symmetry-app .booking-summary { position: static; }
+  .symmetry-app .booking-title { font-size: 1.5rem; }
 }
 
 /* --------------------------------------------------------------------------
