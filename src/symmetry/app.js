@@ -1280,19 +1280,19 @@
       const dateDisplay = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
       const timeDisplay = dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
       return `
-        <article class="booking-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(148,163,184,0.14); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 10px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+        <article class="booking-card">
+          <div class="booking-card__top">
             <div>
-              <p style="margin:0;color:#f8fafc;font-weight:700;">${escapeHtml(booking.meetingType || 'Booking')}</p>
-              <small style="color:#94a3b8;">${escapeHtml(booking.name || 'Guest')}</small>
+              <p class="booking-card__type">${escapeHtml(booking.meetingType || 'Booking')}</p>
+              <small class="booking-card__name">${escapeHtml(booking.name || 'Guest')}</small>
             </div>
-            <span style="color:#87a96b;font-weight:700;">${escapeHtml(booking.status || 'booked')}</span>
+            <span class="booking-card__status">${escapeHtml(booking.status || 'booked')}</span>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-            <span style="color:#cbd5e1;">${dateDisplay}</span>
-            <span style="color:#cbd5e1;">${timeDisplay}</span>
+          <div class="booking-card__when">
+            <span>${dateDisplay}</span>
+            <span>${timeDisplay}</span>
           </div>
-          <p style="margin:0;color:#94a3b8;font-size:0.93rem;line-height:1.5;">${escapeHtml(booking.contact || 'No contact')} · ${escapeHtml(booking.meetingType || 'Virtual')}</p>
+          <p class="booking-card__contact">${escapeHtml(booking.contact || 'No contact')} · ${escapeHtml(booking.meetingType || 'Virtual')}</p>
         </article>
       `;
     }
@@ -1302,8 +1302,8 @@
       if (!container) return;
       if (!upcomingAppointments.length) {
         container.innerHTML = `
-          <div style="padding:24px; border-radius:18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(148,163,184,0.14); color: #cbd5e1; text-align:center;">
-            No upcoming sessions yet. Book a session from the panel above.
+          <div class="booking-empty">
+            No upcoming sessions yet. Pick a day and time above to book your first session.
           </div>
         `;
         return;
