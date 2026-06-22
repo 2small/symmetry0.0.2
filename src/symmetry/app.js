@@ -2062,75 +2062,83 @@
     // Generate booking dates (next 7 days)
     function generateBookingDates() {
       const dateGrid = document.getElementById('dateGrid');
+      if (!dateGrid) return;
       const today = new Date();
       const dates = [];
-      
+
       for (let i = 1; i <= 7; i++) {
         const date = new Date(today);
         date.setDate(today.getDate() + i);
         dates.push(date);
       }
-      
+
       dateGrid.innerHTML = dates.map(date => {
         const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+        const monthName = date.toLocaleDateString('en-US', { month: 'short' });
         const dayNum = date.getDate();
         const dateStr = date.toISOString().split('T')[0];
-        return `<div class="booking-slot" data-date="${dateStr}" onclick="selectDate('${dateStr}')">
-          <div style="font-size: 0.75rem; color: #64748b;">${dayName}</div>
-          <div style="font-weight: 500;">${dayNum}</div>
-        </div>`;
+        return `<button type="button" class="day-card" data-date="${dateStr}" onclick="selectDate('${dateStr}')">
+          <span class="day-card__month">${monthName}</span>
+          <span class="day-card__num">${dayNum}</span>
+          <span class="day-card__day">${dayName}</span>
+        </button>`;
       }).join('');
     }
-    
+
     // Generate booking times
     function generateBookingTimes() {
       const timeGrid = document.getElementById('timeGrid');
+      if (!timeGrid) return;
       const times = [
-        '9:00 AM', '10:00 AM', '11:00 AM', '2:00 PM', 
+        '9:00 AM', '10:00 AM', '11:00 AM', '2:00 PM',
         '3:00 PM', '4:00 PM', '5:00 PM'
       ];
-      
-      timeGrid.innerHTML = times.map(time => 
-        `<div class="booking-slot" data-time="${time}" onclick="selectTime('${time}')">${time}</div>`
+
+      timeGrid.innerHTML = times.map(time =>
+        `<button type="button" class="time-pill" data-time="${time}" onclick="selectTime('${time}')">${time}</button>`
       ).join('');
     }
-    
+
     // Date selection
     function selectDate(date) {
       selectedDate = date;
-      document.querySelectorAll('#dateGrid .booking-slot').forEach(slot => 
+      document.querySelectorAll('#dateGrid .day-card').forEach(slot =>
         slot.classList.remove('selected'));
-      document.querySelector(`[data-date="${date}"]`).classList.add('selected');
+      const el = document.querySelector(`#dateGrid [data-date="${date}"]`);
+      if (el) el.classList.add('selected');
       updateSelectedDateTime();
     }
-    
+
     // Time selection
     function selectTime(time) {
       selectedTime = time;
-      document.querySelectorAll('#timeGrid .booking-slot').forEach(slot => 
+      document.querySelectorAll('#timeGrid .time-pill').forEach(slot =>
         slot.classList.remove('selected'));
-      document.querySelector(`[data-time="${time}"]`).classList.add('selected');
+      const el = document.querySelector(`#timeGrid [data-time="${time}"]`);
+      if (el) el.classList.add('selected');
       updateSelectedDateTime();
     }
-    
+
     // Update selected date/time display
     function updateSelectedDateTime() {
       const selectedEl = document.getElementById('selectedDateTime');
       const mpesaBtn = document.getElementById('mpesaPaymentBtn');
-      
+      if (!selectedEl) return;
+
       if (selectedDate && selectedTime) {
         const date = new Date(selectedDate);
-        const dateStr = date.toLocaleDateString('en-US', { 
-          weekday: 'long', 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
+        const dateStr = date.toLocaleDateString('en-US', {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric'
         });
-        selectedEl.textContent = `${dateStr} at ${selectedTime}`;
-        mpesaBtn.disabled = false;
+        selectedEl.textContent = `${dateStr} · ${selectedTime}`;
+        selectedEl.classList.add('is-set');
+        if (mpesaBtn) mpesaBtn.disabled = false;
       } else {
         selectedEl.textContent = 'Please select a date and time';
-        mpesaBtn.disabled = true;
+        selectedEl.classList.remove('is-set');
+        if (mpesaBtn) mpesaBtn.disabled = true;
       }
     }
     
