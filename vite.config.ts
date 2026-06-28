@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   root: 'src/symmetry', // 👈 Redirects Vite's entry point to the src folder
   build: {
-    outDir: '../dist', // 👈 Forces the compiled build to output to the project root's dist folder
+    outDir: '../../dist', // 👈 Output to the project root's dist folder (outDir is relative to `root`)
     emptyOutDir: true
   }
 })
