@@ -7,14 +7,8 @@ export default defineConfig({
     TanStackRouterVite(),
     react()
   ],
+  // Remove manual root/outDir keys to let Vinxi compile the full-stack bundle
   server: {
-    // This tells the framework to compile server bundles for Cloudflare Workers/Pages
     preset: 'cloudflare-pages' 
-  },
-  root: 'src/symmetry', 
-  build: {
-    // We redirect the output directory to match where wrangler looks
-    outDir: '../../.output/public', 
-    emptyOutDir: true
   }
 })
