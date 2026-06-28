@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "symmetry_lab",
+  "name": "symmetry",
   "main": ".output/server/index.mjs",
   "compatibility_date": "2026-06-28",
   "compatibility_flags": [
