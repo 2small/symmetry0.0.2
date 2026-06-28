@@ -1,3 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Symmetry — Mindful Dashboard</title>
+  <meta name="description" content="A calm, mindful wellness dashboard: track mood, energy and sleep, reflect, and book sessions — all stored privately on your device." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Livvic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="./symmetry.css" />
+</head>
+<body>
+<div class="symmetry-app">
+
   <!-- Sage Navigation -->
   <nav class="sage-nav" style="background: #1a1a1a;">
     <div class="flex justify-between items-center">
@@ -1009,4 +1024,18 @@
       </div>
     </div>
   </div>
+
+</div><!-- /.symmetry-app -->
+
+<!-- Dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pouchdb@8.0.1/dist/pouchdb.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pouchdb-adapter-idb@8.0.1/dist/pouchdb.idb.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@scure/bip39@1.2.1/dist/bip39.bundle.min.js"></script>
+
+<!-- App logic (kept as a classic script so global onclick handlers resolve) -->
+<script src="./app.js"></script>
+</body>
+</html>
+
 
