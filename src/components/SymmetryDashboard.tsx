@@ -1,7 +1,20 @@
 import { useEffect, useRef } from "react";
-import bodyHtml from "@/symmetry/body.html?raw";
-import appScript from "@/symmetry/app.js?raw";
+import indexHtml from "@/symmetry/index.html?raw";
+import appScript from "@/symmetry/public/app.js?raw";
 import "@/symmetry/symmetry.css";
+
+// The source markup lives in a standalone document (src/symmetry/index.html).
+// We only want the inner content of its `.symmetry-app` wrapper — the component
+// renders its own `.symmetry-app` container, and the document's <head>/CDN
+// <script> tags are loaded separately below.
+function extractAppMarkup(doc: string): string {
+  const open = doc.indexOf('<div class="symmetry-app">');
+  const close = doc.lastIndexOf("</div><!-- /.symmetry-app -->");
+  if (open === -1 || close === -1) return doc;
+  return doc.slice(open + '<div class="symmetry-app">'.length, close);
+}
+
+const bodyHtml = extractAppMarkup(indexHtml);
 
 const CDN_LIBS = [
   "https://cdn.jsdelivr.net/npm/chart.js",
