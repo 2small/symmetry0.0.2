@@ -1,14 +1,13 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// Lovable's TanStack Start config wrapper handles Tailwind, tsconfig paths,
+// the TanStack Start plugin and React automatically.
+//
+// `nitro: true` force-enables the Nitro deploy build with the Cloudflare
+// `cloudflare-module` preset, so a `vite build` from your own CI (outside the
+// Lovable sandbox) emits the Worker bundle that wrangler.json expects:
+//   - .output/server/index.mjs  (Worker entry → wrangler `main`)
+//   - .output/public            (static assets → wrangler `assets.directory`)
 export default defineConfig({
-  plugins: [
-    TanStackRouterVite(),
-    react()
-  ],
-  // Remove manual root/outDir keys to let Vinxi compile the full-stack bundle
-  server: {
-    preset: 'cloudflare-pages' 
-  }
-})
+  nitro: true,
+});
