@@ -10,11 +10,17 @@
 
 const memStore = new Map<string, string>();
 
-async function getKV(): Promise<KVNamespace | null> {
+type KVLike = {
+  get: (key: string) => Promise<string | null>;
+  put: (key: string, value: string, opts?: { expirationTtl?: number }) => Promise<void>;
+};
+
+async function getKV(): Promise<KVLike | null> {
   try {
-    const mod = await import("cloudflare:workers");
+    // `cloudflare:workers` only resolves in the Worker runtime; ignore in dev.
+    const mod = await import(/* @vite-ignore */ "cloudflare:workers" as string);
     const env = (mod as { env?: Record<string, unknown> }).env;
-    const kv = env?.PAYMENTS as KVNamespace | undefined;
+    const kv = env?.PAYMENTS as KVLike | undefined;
     return kv ?? null;
   } catch {
     return null;
