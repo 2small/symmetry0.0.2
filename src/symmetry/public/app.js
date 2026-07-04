@@ -2347,35 +2347,7 @@
       });
     }
     
-    // Monitor payment status
-    function monitorPaymentStatus(transactionId) {
-      const checkInterval = setInterval(async () => {
-        try {
-          const response = await fetch(`/api/payment-status/${transactionId}`);
-          const result = await response.json();
-          
-          if (result.status !== 'pending') {
-            clearInterval(checkInterval);
-            await updateTransactionStatus(transactionId, result.status);
-            
-            if (result.status === 'completed') {
-              showToast('Payment successful! Booking confirmed.', 'success');
-              // Reset booking form
-              selectedDate = null;
-              selectedTime = null;
-              updateSelectedDateTime();
-            } else {
-              showToast('Payment failed. Please try again.', 'error');
-            }
-          }
-        } catch (error) {
-          clearInterval(checkInterval);
-        }
-      }, 3000); // Check every 3 seconds
-      
-      // Stop checking after 5 minutes
-      setTimeout(() => clearInterval(checkInterval), 300000);
-    }
+
     
     // Update transaction status in IndexedDB
     async function updateTransactionStatus(transactionId, status) {
