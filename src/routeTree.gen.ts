@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicMpesaStkPushRouteImport } from './routes/api/public/mpesa-stk-push'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMpesaStkPushRoute = ApiPublicMpesaStkPushRouteImport.update({
+  id: '/api/public/mpesa-stk-push',
+  path: '/api/public/mpesa-stk-push',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/mpesa-stk-push': typeof ApiPublicMpesaStkPushRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/mpesa-stk-push': typeof ApiPublicMpesaStkPushRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/mpesa-stk-push': typeof ApiPublicMpesaStkPushRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/public/mpesa-stk-push'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/public/mpesa-stk-push'
+  id: '__root__' | '/' | '/api/public/mpesa-stk-push'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicMpesaStkPushRoute: typeof ApiPublicMpesaStkPushRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,12 +58,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/mpesa-stk-push': {
+      id: '/api/public/mpesa-stk-push'
+      path: '/api/public/mpesa-stk-push'
+      fullPath: '/api/public/mpesa-stk-push'
+      preLoaderRoute: typeof ApiPublicMpesaStkPushRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicMpesaStkPushRoute: ApiPublicMpesaStkPushRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
