@@ -2144,128 +2144,125 @@
     
     // M-Pesa STK Push Implementation
     async function initiateMpesaPayment() {
-      showToast('M-Pesa booking is currently under maintenance.', 'warning');
-      return;
-
       if (!selectedDate || !selectedTime) {
         showToast('Please select both date and time', 'error');
         return;
       }
-      
-      const phoneNumber = localStorage.getItem('luamUserPhone') || '+254712345678';
+
+      const phoneInput = document.getElementById('mpesaPhone');
+      const phoneNumber = (phoneInput && phoneInput.value.trim()) ||
+        localStorage.getItem('luamUserPhone') || '';
+
+      if (!/^(?:\+?254|0)?[17]\d{8}$/.test(phoneNumber.replace(/\s+/g, ''))) {
+        showToast('Enter a valid Safaricom number (e.g. 0712345678)', 'error');
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+      localStorage.setItem('luamUserPhone', phoneNumber);
+
       const amount = 2500;
-      const accountReference = `LUAM-${Date.now()}`;
-      const transactionDesc = 'Therapy Session Booking';
-      
+      const orderRef = `LUAM-${Date.now()}`;
+
+      const btn = document.getElementById('mpesaPaymentBtn');
+      const originalText = btn ? btn.textContent : 'Pay with M-Pesa';
+
       try {
-        // Show processing state
-        const btn = document.getElementById('mpesaPaymentBtn');
-        const originalText = btn.textContent;
-        btn.textContent = 'Processing...';
-        btn.disabled = true;
-        
-        // Call Cloudflare Worker for M-Pesa STK Push
-        const response = await fetch('https://your-worker.workers.dev/mpesa-stk-push', {
+        if (btn) { btn.textContent = 'Sending prompt…'; btn.disabled = true; }
+
+        const response = await fetch('/api/public/mpesa-stk-push', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            phoneNumber: phoneNumber,
-            amount: amount,
-            accountReference: accountReference,
-            transactionDesc: transactionDesc,
-            transactionType: 'booking',
-            patientId: localStorage.getItem('symmetrySageId') || 'LUAM-PATIENT'
-          })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: phoneNumber, amount, orderRef })
         });
-        
+
         const result = await response.json();
-        
-        if (result.success) {
+
+        if (response.ok && result.success) {
           showToast('M-Pesa prompt sent to your phone', 'success');
-          
-          // Store transaction in IndexedDB
+
           await storeTransaction({
-            id: accountReference,
+            id: orderRef,
             amount: amount,
             date: selectedDate,
             time: selectedTime,
             status: 'pending',
             timestamp: new Date().toISOString()
           });
-          
-          // Monitor payment status
-          monitorPaymentStatus(accountReference);
+
+          if (btn) btn.textContent = 'Awaiting payment…';
+          monitorPaymentStatus(orderRef);
         } else {
-          showToast('Payment initiation failed: ' + (result.message || 'Unknown error'), 'error');
-          btn.textContent = originalText;
-          btn.disabled = false;
+          showToast('Payment failed: ' + (result.error || 'Unknown error'), 'error');
+          if (btn) { btn.textContent = originalText; btn.disabled = false; }
         }
-        
       } catch (error) {
         console.error('M-Pesa payment error:', error);
         showToast('Payment failed. Please try again.', 'error');
-        const btn = document.getElementById('mpesaPaymentBtn');
-        btn.textContent = 'Pay with M-Pesa';
-        btn.disabled = false;
+        if (btn) { btn.textContent = originalText; btn.disabled = false; }
       }
     }
-    
-    // Monitor payment status and handle success
-    async function monitorPaymentStatus(accountReference) {
-      const maxAttempts = 30;
+
+    // Poll the backend for the STK push outcome and handle success/failure.
+    async function monitorPaymentStatus(orderRef) {
+      const maxAttempts = 40;
       let attempts = 0;
-      
+
       const checkStatus = async () => {
         if (attempts >= maxAttempts) {
-          showToast('Payment verification timeout', 'error');
+          showToast('Payment verification timed out. Check M-Pesa and try again.', 'error');
+          const btn = document.getElementById('mpesaPaymentBtn');
+          if (btn) { btn.textContent = 'Pay with M-Pesa'; btn.disabled = false; }
           return;
         }
-        
+
         try {
-          const response = await fetch(`https://your-worker.workers.dev/payment-status/${accountReference}`);
+          const response = await fetch(`/api/public/payment-status/${orderRef}`);
           const result = await response.json();
-          
-          if (result.status === 'completed' && result.resultCode === '0') {
-            // Payment successful - save license to PouchDB
+
+          if (result.status === 'completed') {
+            await updateTransactionStatus(orderRef, 'completed');
             await saveLicenseToPouchDB({
-              license_key: result.licenseKey,
+              license_key: result.mpesaReceipt || orderRef,
               payment_status: 'active',
-              accountReference: accountReference,
+              accountReference: orderRef,
               timestamp: new Date().toISOString()
             });
-            
-            // Update UI to show Luam Verified badge
             showLuamVerifiedBadge();
-            
-            showToast('Payment successful! Luam Verified', 'success');
-            
-            // Reset button
+            showToast('Payment successful! Booking confirmed.', 'success');
+
             const btn = document.getElementById('mpesaPaymentBtn');
-            btn.textContent = 'Paid';
-            btn.disabled = true;
-            btn.style.background = '#22C55E';
-            
-          } else if (result.status === 'failed') {
-            showToast('Payment failed', 'error');
-            const btn = document.getElementById('mpesaPaymentBtn');
-            btn.textContent = 'Pay with M-Pesa';
-            btn.disabled = false;
-          } else {
-            // Still pending, check again
-            attempts++;
-            setTimeout(checkStatus, 3000);
+            if (btn) {
+              btn.textContent = 'Paid';
+              btn.disabled = true;
+              btn.style.background = '#22C55E';
+            }
+            selectedDate = null;
+            selectedTime = null;
+            updateSelectedDateTime();
+            return;
           }
+
+          if (result.status === 'failed') {
+            await updateTransactionStatus(orderRef, 'failed');
+            showToast('Payment failed or was cancelled.', 'error');
+            const btn = document.getElementById('mpesaPaymentBtn');
+            if (btn) { btn.textContent = 'Pay with M-Pesa'; btn.disabled = false; }
+            return;
+          }
+
+          // Still pending (or unknown) — keep polling.
+          attempts++;
+          setTimeout(checkStatus, 3000);
         } catch (error) {
           console.error('Status check error:', error);
           attempts++;
           setTimeout(checkStatus, 3000);
         }
       };
-      
-      setTimeout(checkStatus, 5000);
+
+      setTimeout(checkStatus, 4000);
     }
+
     
     // Save license to PouchDB
     async function saveLicenseToPouchDB(licenseData) {
