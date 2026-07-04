@@ -642,6 +642,20 @@
 .symmetry-app .booking-meta-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; }
 .symmetry-app .booking-meta-row span { color: var(--ink-2); }
 .symmetry-app .booking-meta-row strong { color: var(--ink); font-weight: var(--weight-semibold); }
+.symmetry-app .booking-phone-label {
+  display: block; font-size: 0.72rem; font-weight: var(--weight-semibold);
+  color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
+}
+.symmetry-app .booking-phone-input {
+  width: 100%; padding: 11px 14px; margin-bottom: 12px;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--border-soft); border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.symmetry-app .booking-phone-input:focus {
+  outline: none; border-color: var(--sage);
+  box-shadow: 0 0 0 3px rgba(135, 169, 107, 0.15);
+}
 .symmetry-app .booking-summary .mpesa-btn,
 .symmetry-app .booking-summary .btn { width: 100%; margin: 0; }
 .symmetry-app .booking-summary__note { text-align: center; font-size: 0.72rem; color: var(--muted); }

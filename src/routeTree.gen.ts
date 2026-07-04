@@ -10,33 +10,77 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicMpesaStkPushRouteImport } from './routes/api/public/mpesa-stk-push'
+import { Route as ApiPublicMpesaCallbackRouteImport } from './routes/api/public/mpesa-callback'
+import { Route as ApiPublicPaymentStatusRefRouteImport } from './routes/api/public/payment-status.$ref'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMpesaStkPushRoute = ApiPublicMpesaStkPushRouteImport.update({
+  id: '/api/public/mpesa-stk-push',
+  path: '/api/public/mpesa-stk-push',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicMpesaCallbackRoute = ApiPublicMpesaCallbackRouteImport.update({
+  id: '/api/public/mpesa-callback',
+  path: '/api/public/mpesa-callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicPaymentStatusRefRoute =
+  ApiPublicPaymentStatusRefRouteImport.update({
+    id: '/api/public/payment-status/$ref',
+    path: '/api/public/payment-status/$ref',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/mpesa-callback': typeof ApiPublicMpesaCallbackRoute
+  '/api/public/mpesa-stk-push': typeof ApiPublicMpesaStkPushRoute
+  '/api/public/payment-status/$ref': typeof ApiPublicPaymentStatusRefRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/mpesa-callback': typeof ApiPublicMpesaCallbackRoute
+  '/api/public/mpesa-stk-push': typeof ApiPublicMpesaStkPushRoute
+  '/api/public/payment-status/$ref': typeof ApiPublicPaymentStatusRefRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/mpesa-callback': typeof ApiPublicMpesaCallbackRoute
+  '/api/public/mpesa-stk-push': typeof ApiPublicMpesaStkPushRoute
+  '/api/public/payment-status/$ref': typeof ApiPublicPaymentStatusRefRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/public/mpesa-callback'
+    | '/api/public/mpesa-stk-push'
+    | '/api/public/payment-status/$ref'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/public/mpesa-callback'
+    | '/api/public/mpesa-stk-push'
+    | '/api/public/payment-status/$ref'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/public/mpesa-callback'
+    | '/api/public/mpesa-stk-push'
+    | '/api/public/payment-status/$ref'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicMpesaCallbackRoute: typeof ApiPublicMpesaCallbackRoute
+  ApiPublicMpesaStkPushRoute: typeof ApiPublicMpesaStkPushRoute
+  ApiPublicPaymentStatusRefRoute: typeof ApiPublicPaymentStatusRefRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +92,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/mpesa-stk-push': {
+      id: '/api/public/mpesa-stk-push'
+      path: '/api/public/mpesa-stk-push'
+      fullPath: '/api/public/mpesa-stk-push'
+      preLoaderRoute: typeof ApiPublicMpesaStkPushRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/mpesa-callback': {
+      id: '/api/public/mpesa-callback'
+      path: '/api/public/mpesa-callback'
+      fullPath: '/api/public/mpesa-callback'
+      preLoaderRoute: typeof ApiPublicMpesaCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/payment-status/$ref': {
+      id: '/api/public/payment-status/$ref'
+      path: '/api/public/payment-status/$ref'
+      fullPath: '/api/public/payment-status/$ref'
+      preLoaderRoute: typeof ApiPublicPaymentStatusRefRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicMpesaCallbackRoute: ApiPublicMpesaCallbackRoute,
+  ApiPublicMpesaStkPushRoute: ApiPublicMpesaStkPushRoute,
+  ApiPublicPaymentStatusRefRoute: ApiPublicPaymentStatusRefRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
